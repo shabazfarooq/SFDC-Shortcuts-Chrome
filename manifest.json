@@ -1,10 +1,10 @@
 {
-  "name": "Test SFDC Setup shortcut",
-  "version": "0.1",
+  "name": "SFDC Shortcuts",
+  "version": "0.2",
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["<all_urls>", "https://*.salesforce.com/*"],
+      "matches": ["https://*.salesforce.com/*"],
       "js": ["content.js"]
     }
   ],
@@ -14,22 +14,22 @@
   "commands": {
     "goToSfdcSetup": {
       "suggested_key": {
-        "default": "Ctrl+Shift+S",
-        "mac": "Ctrl+Shift+S"
+        "default": "Ctrl+Shift+I",
+        "mac": "Alt+Shift+I"
       },
       "description": "Loads the Salesforce setup page"
     },
     "goToSfdcPages": {
       "suggested_key": {
-        "default": "Ctrl+Shift+P",
-        "mac": "Ctrl+Shift+P"
+        "default": "Ctrl+Shift+L",
+        "mac": "Alt+Shift+L"
       },
       "description": "Loads the Salesforce pages"
     },
     "goToSfdcClasses": {
       "suggested_key": {
-        "default": "Ctrl+Shift+C",
-        "mac": "Ctrl+Shift+C"
+        "default": "Ctrl+Shift+J",
+        "mac": "Alt+Shift+J"
       },
       "description": "Loads the Salesforce classes"
     }

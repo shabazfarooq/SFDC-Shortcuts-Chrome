@@ -3,8 +3,8 @@ var currentSfdcTabBaseUrl;
 var sfdcUrlExtensions = {
   setup: '/setup/forcecomHomepage.apexp?setupid=ForceCom&retURL=%2Fhome%2Fhome.jsp',
   pages: '/apexpages/setup/listApexPage.apexp?retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDevToolsIntegrate&setupid=ApexPages',
-  classes: '01p?retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDevToolsIntegrate&setupid=ApexClasses'
-}
+  classes: '/01p?retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDevToolsIntegrate&setupid=ApexClasses'
+};
 
 // Grab base URL from content.js
 chrome.runtime.onMessage.addListener(
@@ -16,13 +16,10 @@ chrome.runtime.onMessage.addListener(
 // Listen for goToSfdcSetup hotkey defined in manifest.json
 chrome.commands.onCommand.addListener(
   function(command){
-    alert('wtf...');
     if(command === "goToSfdcSetup"){
-      alert('setup: ' + sfdcUrlExtensions.setup);
       updateCurrentTab(sfdcUrlExtensions.setup);
     }
     else if(command === "goToSfdcPages"){
-      alert('pages: ' + sfdcUrlExtensions.pages); 
       updateCurrentTab(sfdcUrlExtensions.pages);
     }
     else if(command === "goToSfdcClasses"){
