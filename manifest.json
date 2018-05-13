@@ -17,21 +17,28 @@
         "default": "Ctrl+Shift+I",
         "mac": "Alt+Shift+I"
       },
-      "description": "Loads the Salesforce setup page"
+      "description": "Loads the Salesforce Setup page"
     },
     "goToSfdcPages": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Alt+Shift+P"
+      },
+      "description": "Loads Salesforce Pages"
+    },
+    "goToSfdcClasses": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Alt+Shift+C"
+      },
+      "description": "Loads Salesforce Classes"
+    },
+    "goToSfdcDevConsole": {
       "suggested_key": {
         "default": "Ctrl+Shift+L",
         "mac": "Alt+Shift+L"
       },
-      "description": "Loads the Salesforce pages"
-    },
-    "goToSfdcClasses": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+J",
-        "mac": "Alt+Shift+J"
-      },
-      "description": "Loads the Salesforce classes"
+      "description": "Loads the Salesforce Developer Console"
     }
   },
   "permissions": [
