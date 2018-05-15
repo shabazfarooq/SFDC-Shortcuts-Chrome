@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(
 
 // Listen for goToSfdcSetup hotkey defined in manifest.json
 chrome.commands.onCommand.addListener(
-  function(command, somethingelse){
+  function(command){
     var commandExtension = sfdcUrlExtensions[command];
 
     // Validate command exists in sfdcUrlExtensions
