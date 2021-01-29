@@ -1,10 +1,10 @@
 {
   "name": "SFDC Shortcuts",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["https://*.salesforce.com/*"],
+      "matches": ["https://*.salesforce.com/*", "https://*.force.com/*"],
       "js": ["content.js"]
     }
   ],
@@ -26,17 +26,17 @@
       },
       "description": "Loads the Salesforce Setup page"
     },
-    "goToSfdcPages": {
+    "goToSfdcObjects": {
       "suggested_key": {
-        "default": "Ctrl+Shift+P",
-        "mac": "Alt+P"
+        "default": "Ctrl+Shift+O",
+        "mac": "Alt+O"
       },
-      "description": "Loads Salesforce Pages"
+      "description": "Loads the Salesforce Objects page"
     },
     "goToSfdcClasses": {
       "suggested_key": {
-        "default": "Ctrl+Shift+C",
-        "mac": "Alt+C"
+        "default": "Ctrl+Shift+J",
+        "mac": "Alt+J"
       },
       "description": "Loads Salesforce Classes"
     }
