@@ -9,17 +9,17 @@ var sfdcUrlExtensions = {
   goToSfdcSetup: {
     url: '/setup/forcecomHomepage.apexp?setupid=ForceCom&retURL=%2Fhome%2Fhome.jsp',
     lightningUrl: '/lightning/setup/SetupOneHome/home',
-    newTab: false
+    newTab: true
   },
   goToSfdcObjects: {
     url: '/setup/forcecomHomepage.apexp?setupid=ForceCom&retURL=%2Fhome%2Fhome.jsp',
     lightningUrl: '/lightning/setup/ObjectManager/home',
-    newTab: false
+    newTab: true
   },
   goToSfdcClasses: {
     url: '/01p?retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDevToolsIntegrate&setupid=ApexClasses',
     lightningUrl: '/lightning/setup/ApexClasses/home',
-    newTab: false
+    newTab: true
   },
 };
 
