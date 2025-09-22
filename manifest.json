@@ -1,48 +1,50 @@
 {
   "name": "SFDC Shortcuts",
-  "version": "0.3",
-  "manifest_version": 2,
+  "version": "0.4",
+  "manifest_version": 3,
+  "permissions": ["tabs", "scripting", "commands"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["https://*.salesforce.com/*", "https://*.force.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_idle"
     }
   ],
-  "background": {
-    "scripts": ["background.js"]
-  },
   "commands": {
     "goToSfdcDevConsole": {
       "suggested_key": {
-        "default": "Ctrl+Shift+L",
+        "default": "Alt+L",
         "mac": "Alt+L"
       },
       "description": "Loads the Salesforce Developer Console"
     },
     "goToSfdcSetup": {
       "suggested_key": {
-        "default": "Ctrl+Shift+I",
+        "default": "Alt+I",
         "mac": "Alt+I"
       },
       "description": "Loads the Salesforce Setup page"
     },
     "goToSfdcObjects": {
       "suggested_key": {
-        "default": "Ctrl+Shift+O",
+        "default": "Alt+O",
         "mac": "Alt+O"
       },
       "description": "Loads the Salesforce Objects page"
     },
-    "goToSfdcClasses": {
+    "goToThisObject": {
       "suggested_key": {
-        "default": "Ctrl+Shift+J",
+        "default": "Alt+J",
         "mac": "Alt+J"
       },
-      "description": "Loads Salesforce Classes"
+      "description": "Loads the current Salesforce Object page"
     }
   },
-  "permissions": [
-    "tabs"
+  "host_permissions": [
+    "https://*.salesforce.com/*",
+    "https://*.force.com/*"
   ]
 }
-

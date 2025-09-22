@@ -1,6 +1,4 @@
-var currentSfdcTabBaseUrl;
-
-var sfdcUrlExtensions = {
+const sfdcUrlExtensions = {
   goToSfdcDevConsole: {
     url: '/_ui/common/apex/debug/ApexCSIPage',
     lightningUrl: '/_ui/common/apex/debug/ApexCSIPage',
@@ -15,63 +13,79 @@ var sfdcUrlExtensions = {
     url: '/setup/forcecomHomepage.apexp?setupid=ForceCom&retURL=%2Fhome%2Fhome.jsp',
     lightningUrl: '/lightning/setup/ObjectManager/home',
     newTab: true
-  },
-  goToSfdcClasses: {
-    url: '/01p?retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDevToolsIntegrate&setupid=ApexClasses',
-    lightningUrl: '/lightning/setup/ApexClasses/home',
-    newTab: true
-  },
+  }
 };
 
-// Grab base URL from content.js
-chrome.runtime.onMessage.addListener(
-  function(url, sender, sendResponse){
-    currentSfdcTabBaseUrl = url;
-  }
-);
+chrome.commands.onCommand.addListener(function (command) {
+  console.log('command: ' + command);
 
-// Listen for goToSfdcSetup hotkey defined in manifest.json
-chrome.commands.onCommand.addListener(
-  function(command){
-    var commandExtension = sfdcUrlExtensions[command];
-
-    // Validate command exists in sfdcUrlExtensions
-    if(!commandExtension){
-      alert('Unknown command ' + commandExtension + '. Add to sfdcUrlExtensions.');
-      return;
-    }
-
-    goToUrl(commandExtension);
-  }
-);
-
-function goToUrl(commandExtension){
-  // Validate that the currentTabUrl exists
-  if(!currentSfdcTabBaseUrl){
-    alert('Missing current tab url? ' + currentSfdcTabBaseUrl);
+  if (command === 'goToThisObject') {
+    goToThisObject();
     return;
   }
 
-  // Build new URL based off current page being lighting or classic
-  var urlExtension = currentSfdcTabBaseUrl.endsWith('lightning.force.com') 
-    ? commandExtension.lightningUrl
-    : commandExtension.url;
-
-  var newURL = currentSfdcTabBaseUrl + urlExtension;
-
-  // Open URL in new tab
-  if(commandExtension.newTab){
-    window.open(newURL, '_blank');
+  const commandExtension = sfdcUrlExtensions[command];
+  if (!commandExtension) {
+    console.warn('Unknown command: ' + command);
+    return;
   }
-  // Open URL in current tab
-  else{
-    chrome.tabs.query(
-      {active: true, currentWindow: true},
-      function(arrayOfTabs){
-        var activeTab = arrayOfTabs[0];
-        var activeTabId = activeTab.id;
-        chrome.tabs.update(activeTabId, {url: newURL});
+  goToUrl(commandExtension);
+});
+
+function goToUrl(commandExtension) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const tabUrl = new URL(tabs[0].url);
+    const baseUrl = tabUrl.origin;
+
+    const isLightning = baseUrl.includes('lightning.force.com');
+    const urlExtension = isLightning
+      ? commandExtension.lightningUrl
+      : commandExtension.url;
+    const newURL = baseUrl + urlExtension;
+
+    if (commandExtension.newTab) {
+      chrome.tabs.create({ url: newURL });
+    } else {
+      chrome.tabs.update(tabs[0].id, { url: newURL });
+    }
+  });
+}
+
+function goToThisObject() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tabId = tabs[0].id;
+
+    // Inject the DOM-manipulating code into the page
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        // Step 1: Click the Setup button
+        const setupButton = Array.from(document.querySelectorAll('a.menuTriggerLink'))
+          .find(el => el.querySelector('span[role="tooltip"]')?.textContent.trim() === 'Setup');
+
+        if (setupButton) {
+          setupButton.click();
+          console.log('Setup button clicked!');
+
+          // Step 2: Wait for menu to render, then click Edit Object
+          const clickEditObject = () => {
+            const editObjectButton = Array.from(document.querySelectorAll('a[role="menuitem"]'))
+              .find(el => el.querySelector('span.slds-align-middle')?.textContent.trim() === 'Edit Object');
+
+            if (editObjectButton) {
+              editObjectButton.click();
+              console.log('Edit Object button clicked!');
+            } else {
+              // Retry if not found yet
+              setTimeout(clickEditObject, 300);
+            }
+          };
+
+          setTimeout(clickEditObject, 500); // initial delay
+        } else {
+          console.log('Setup button not found.');
+        }
       }
-    );
-  }
+    });
+  });
 }
