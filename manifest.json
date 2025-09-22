@@ -37,8 +37,8 @@
     },
     "goToThisObject": {
       "suggested_key": {
-        "default": "Alt+J",
-        "mac": "Alt+J"
+        "default": "Alt+P",
+        "mac": "Alt+P"
       },
       "description": "Loads the current Salesforce Object page"
     }
